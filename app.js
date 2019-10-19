@@ -142,10 +142,6 @@ const store = new Vuex.Store({
       state.favorites = state.favorites.filter(x => x !== payload)
     },
 
-    // setStates (state, payload) {
-    //   state.states = payload;
-    // },
-
     setSelectedState (state, payload) {
       state.selectedState = payload;
     },
@@ -164,10 +160,6 @@ const store = new Vuex.Store({
     deleteFavAsync ({commit}, payload) {
       commit("deleteFavorite", payload);
     },
-
-    // setStatesAsync ({commit}, payload) {
-    //   commit("setStates", payload);
-    // }
   }
 })
 
