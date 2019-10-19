@@ -1,9 +1,5 @@
-// index.js //
+// app.js //
 
-import './style.scss';
-
-import Vue from 'vue';
-import Vuex from 'vuex';
 const version = "0.0.1";
 
 Vue.use(Vuex);
