@@ -2,9 +2,6 @@
 
 const version = "0.0.1";
 
-Vue.use(Vuex);
-
-
 
 // #region Pipes ======================== //
 Vue.filter('date', function (value, format) {
