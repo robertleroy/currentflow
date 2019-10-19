@@ -171,12 +171,6 @@ const store = new Vuex.Store({
   }
 })
 
-import { 
-  mapState, 
-  mapGetters,
-  mapMutations, 
-  mapActions 
-} from 'vuex';
 // #endregion Store ======================== //
 
 
@@ -206,14 +200,21 @@ const app = new Vue({
   },
 
   computed: {
-    ...mapState([
-      'version',
-    ]),
-    ...mapGetters([
-      'favorites',
-      'states',
-      'selectedState',
-    ]),
+    version () {
+      return this.$store.state.version;
+    },
+    
+    favorites () {
+      return this.$store.getters.favorites;
+    },
+    
+    states () {
+      return this.$store.getters.states;
+    },
+    
+    selectedState () {
+      return this.$store.getters.selectedState;
+    },
 
     graphPeriod: {
       get () {
@@ -235,19 +236,9 @@ const app = new Vue({
   },
 
   methods: {  
-    ...mapMutations([
-      "setSelectedState",
-    ]),
-
-    ...mapActions([
-      'addFavAsync',
-      'deleteFavAsync',
-      'setStatesAsync'
-    ]), 
-
      
     // #region States ================ //
-    
+
     toggleStates() {
       if (window.innerWidth < 800) {
         this.showStates = !this.showStates;
@@ -262,7 +253,7 @@ const app = new Vue({
     },
 
     selectState(state) {
-      this.setSelectedState(state);
+      this.$store.commit('setSelectedState', state);
       this.toggleStates();
       this.loadGuages(state.abbr);
     },
@@ -328,9 +319,10 @@ const app = new Vue({
     toggleFav(guage) {
       console.log(guage.isFavorite);
       if (guage.isFavorite) {
-        this.deleteFavAsync(guage.siteCode);
+        this.$store.dispatch('deleteFavAsync', guage.siteCode);
       } else {
-        this.addFavAsync(guage.siteCode);
+		    this.$store.dispatch('addFavAsync', guage.siteCode);
+        
       }
       guage.isFavorite = !guage.isFavorite;
     },
