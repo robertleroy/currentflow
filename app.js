@@ -28,7 +28,7 @@ Vue.filter('decimal', function (value, d=0) {
 const store = new Vuex.Store({
   state: {
     version: '',
-    favorites: ["09380000],  
+    favorites: ["09380000"],  
     favsObj: { 
       name: 'Favorites', 
       abbr: 'favs', 
