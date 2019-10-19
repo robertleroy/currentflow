@@ -754,11 +754,14 @@ aside .listItem{
     background:#cccccc80
 }
 .detail .row{
-    padding:0.5rem 2rem;
+    padding:0.25rem 2rem;
     display:grid;
     grid-auto-flow:column;
     justify-content:space-between;
     grid-gap:1rem
+}
+.detail .row time,.detail .row a{
+    font-style:italic
 }
 .detail .row select{
     border-bottom:1px solid rgba(0,0,0,0.3);
