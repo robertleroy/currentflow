@@ -2,6 +2,26 @@
 
 const version = "0.0.1";
 
+Vue.directive("swipe_left", {    
+  bind: function(el, binding) {
+    if (typeof binding.value === "function") { 
+      const mc = new Hammer(el); 
+      mc.get("swipe").set({ direction: Hammer.DIRECTION_LEFT });
+      mc.on("swipe", binding.value);
+    }
+  }
+});  
+
+Vue.directive("swipe_right", { 
+  bind: function(el, binding) {
+    if (typeof binding.value === "function") {
+      const mc = new Hammer(el);
+      mc.get("swipe").set({ direction: Hammer.DIRECTION_RIGHT });
+      mc.on("swipe", binding.value);
+    }
+  }
+});
+
 
 // #region Pipes ======================== //
 Vue.filter('date', function (value, format) {
