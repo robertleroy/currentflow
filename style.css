@@ -1,6 +1,6 @@
 :root{
     --fontColor: #333333;
-    --backgroundColor: #f7f7f7;
+    --backgroundColor: #f7f7f7 url("https://robertleroy.github.io/crate/textures/stucco.png");
     --headingColor: #222222;
     --linkColor: #1E90FF;
     --activeColor: #ff8f1f;
@@ -791,7 +791,7 @@ aside .listItem{
     display:grid;
     grid-template-columns:auto auto;
     justify-content:space-between;
-    align-items:center;
+    align-items:flex-start;
     grid-gap:0 1rem;
     height:5rem;
     padding:1rem 2rem
