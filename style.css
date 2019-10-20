@@ -732,6 +732,9 @@ aside .listItem{
     overflow-y:auto;
     z-index:45
 }
+.detail .header{
+    align-items:start
+}
 .detail .graph{
     position:relative;
     padding:0 1rem;
@@ -759,9 +762,6 @@ aside .listItem{
     grid-auto-flow:column;
     justify-content:space-between;
     grid-gap:1rem
-}
-.detail .row time,.detail .row a{
-    font-style:italic
 }
 .detail .row select{
     border-bottom:1px solid rgba(0,0,0,0.3);
@@ -791,7 +791,7 @@ aside .listItem{
     display:grid;
     grid-template-columns:auto auto;
     justify-content:space-between;
-    align-items:flex-start;
+    align-items:start;
     grid-gap:0 1rem;
     height:5rem;
     padding:1rem 2rem
