@@ -1,6 +1,6 @@
 // app.js //
 
-const version = "0.0.1";
+const Version = "0.0.1";
 
 Vue.directive("swipe_left", {    
   bind: function(el, binding) {
