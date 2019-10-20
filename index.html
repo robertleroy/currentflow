@@ -12,154 +12,151 @@
   
 <body>
 
-  <div id="app">
-    
-    
-    
-    <header>
-      <h4 @click="innerWidth() < 800 ? toggleStates() : ''">
-        {{innerWidth() < 405 ?  selectedState.short : selectedState.name}} 
-      </h4>
+<div id="app">
 
-      <div class="outerGroup">
-        <div class="inputGroup">
-          <input ref="filter" type="text" :placeholder="placeholder"
-            v-model="filter">
-          <div class="icon btn"
-              v-if="filter.length"
-              @click="clearFilter">
-            close
-          </div>
-          <small>({{filteredGuages.length}})</small>      
-        </div>    
+	<header>
+    <h4 @click="innerWidth < 800 ? toggleStates() : ''">
+      {{innerWidth < 423 ?  selectedState.short : selectedState.name}} 
+    </h4>
+    
+    <div class="outerGroup">
+      <div class="inputGroup">
+        <input ref="filter" type="text" :placeholder="placeholder"
+          v-model="filter">
+        <div class="icon btn"
+            v-if="filter.length"
+            @click="clearFilter">
+          close
+        </div>
+        <small>({{filteredGuages.length}})</small>      
+      </div>    
+      
+      <div class="icon btn"
+          @click="toggleAbout=!toggleAbout">
+        more_vert
+      </div>
+    </div>
+	</header>
+
+  <aside ref="aside">
+    <div class="icon btn closeMenu"
+      @click="toggleStates">
+      close
+    </div>
+
+    <div class="states">          
+      <div class="listItem" :key="state.abbr"
+          v-for="state of states"
+          @click="selectState(state)">
+        {{state.name}}
+      </div> 
+    </div>
+  </aside>
+
+	<section ref="guages" class="guages"> 
+    <div class="loader">loading...</div>
+    
+    <transition name="fade" mode="out-in"> 
+    <div class="list" :key="toggleFade">    
+      <div class="listItem" :key="index"
+        v-for="(guage,index) of filteredGuages"> 
+        <div class="siteName"
+          @click="toggleDetail(guage)">
+          {{guage.siteName | titlecase}}
+        </div>
+        <div v-if="guage.value === '-999999'">...</div>
+        <div v-else-if="guage.value === '-999998'">err</div> 
+        <div v-else>{{guage.value | decimal}} <small>cfs</small></div>
+      </div>      
+    </div>
+  </transition>
+	</section>
+
+
+  
+  <transition name="fade">
+    <div class="detailMask" 
+      v-if="showDetail"
+      @click="toggleDetail"></div>
+  </transition>
+   
+
+
+  <transition name="detail">
+    <section ref="detail" class="detail" v-if="showDetail">
+      <div class="header">
+        
+        <h6>{{selectedGuage.siteName | titlecase}}</h6>
+
+        <div class="icon btn closeDetail"
+          @click="toggleDetail">
+          close
+        </div>
+      </div>
+
+
+      <div class="graph">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 25">
+          <text x="3.871" y="4.715" font-size="1.372" stroke-width=".114">
+            loading...
+          </text>
+        </svg>
+
+        <img :src="'https://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no=' + selectedGuage.siteCode + '&parm_cd=00060&period=' +
+        this.graphPeriod ">
+      </div>
+
+
+      <div class="row">
+        <time>Updated: &nbsp; {{selectedGuage.dateTime | date("MMM D, Y &nbsp; h:mm a")}}</time>
+
+        <div class="flow">
+          <small v-if='selectedGuage.value == -999999'>
+            <em>Seasonal</em>
+          </small>
+
+          <span v-else>
+            {{selectedGuage.value}} <small>cfs</small>
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <a class='googmap' :href="'https://www.google.com/maps/search/?api=1&query=' + selectedGuage.latitude + '%2C' + selectedGuage.longitude" target='_blank'>Google Maps</a>
+
+        <select v-model='graphPeriod'>
+          <option v-for="(p, index) of periods" 
+            :value="p.num" :key="index">
+            {{p.name}}
+          </option>
+        </select>
+      </div>
+
+      <div class="fav">
+        <div class="icon" @click="toggleFav(selectedGuage)">
+          {{selectedGuage.isFavorite ? 'favorite' : 'favorite_border'}}
+        </div>
+      </div>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section class="about" v-if="toggleAbout">
+      <div class="aboutText">
+        <h4 class='description'><span>Currentflow</span> presents real-time streamflow data compiled by the U.S Geological Survey.</h4>
 
         <div class="icon btn"
-            @click="toggleAbout=!toggleAbout">
-          more_vert
+            @click="toggleAbout = !toggleAbout">
+          close
         </div>
       </div>
-    </header>
-      
-      
 
-    <aside ref="aside">
-      <div class="icon btn closeMenu"
-        @click="toggleStates">
-        close
-      </div>
+    <img src="https://robertleroy.github.io/crate/svg/river.svg" class="river" type="image/svg+xml !important">
 
-      <div class="states">          
-        <div class="listItem" :key="state.abbr"
-            v-for="state of states"
-            @click="selectState(state)">
-          {{state.name}}
-        </div> 
-      </div>
-    </aside>
-      
-      
-
-    <section ref="guages" class="guages"> 
-      <div class="loader">loading...</div>
-      <transition name="fade" mode="out-in"> 
-      <div class="list" :key="toggleFade">    
-        <div class="listItem" :key="index"
-          v-for="(guage,index) of filteredGuages"> 
-          <div class="siteName"
-            @click="toggleDetail(guage)">
-            {{guage.siteName | titlecase}}
-          </div>
-          <div v-if="guage.value === '-999999'">...</div>
-          <div v-else-if="guage.value === '-999998'">err</div> 
-          <div v-else>{{guage.value | decimal}} <small>cfs</small></div>
-        </div>      
-      </div>
-    </transition>
     </section>
-      
-      
-      
-    <transition name="fade">
-      <div class="detailMask" 
-        v-if="showDetail"
-        @click="toggleDetail"></div>
-    </transition>
+  </transition>
 
-    <transition name="detail">
-      <section ref="detail" class="detail" v-if="showDetail">
-        <div class="header">
-
-          <h6>{{selectedGuage.siteName | titlecase}}</h6>
-
-          <div class="icon btn closeDetail"
-            @click="toggleDetail">
-            close
-          </div>
-        </div>
-
-        <div class="graph">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 25">
-            <text x="3.871" y="4.715" font-size="1.372" stroke-width=".114">
-              loading...
-            </text>
-          </svg>
-
-          <img :src="'https://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no=' + selectedGuage.siteCode + '&parm_cd=00060&period=' +
-          this.graphPeriod ">
-        </div>
-
-        <div class="row">
-          <time>Updated: &nbsp; {{selectedGuage.dateTime | date("MMM D, Y &nbsp; h:mm a")}}</time>
-
-          <div class="flow">
-            <small v-if='selectedGuage.value == -999999'>
-              <em>Seasonal</em>
-            </small>
-
-            <span v-else>
-              {{selectedGuage.value | decimal}} <small>cfs</small>
-            </span>
-          </div>
-        </div>
-
-        <div class="row">
-          <a class='googmap' :href="'https://www.google.com/maps/search/?api=1&query=' + selectedGuage.latitude + '%2C' + selectedGuage.longitude" target='_blank'>Google Maps</a>
-
-          <select v-model='graphPeriod'>
-            <option v-for="(p, index) of periods" 
-              :value="p.num" :key="index">
-              {{p.name}}
-            </option>
-          </select>
-        </div>
-
-        <div class="fav">
-          <div class="icon" @click="toggleFav(selectedGuage)">
-            {{selectedGuage.isFavorite ? 'favorite' : 'favorite_border'}}
-          </div>
-        </div>
-      </section>
-    </transition>
-
-      
-      
-    <transition name="fade">
-      <section class="about" v-if="toggleAbout">
-        <div class="aboutText">
-          <h4 class='description'><span>Currentflow</span> presents real-time streamflow data compiled by the U.S Geological Survey.</h4>
-
-          <div class="icon btn"
-              @click="toggleAbout = !toggleAbout">
-            close
-          </div>
-        </div>
-
-      <img src="assets/river.svg" class="river" alt="river logo" type="image/svg+xml">
-
-      </section>
-    </transition>
-
-  </div> <!-- app -->
+</div> <!-- app -->
     
     
 
