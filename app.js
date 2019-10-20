@@ -1,6 +1,6 @@
 // app.js //
 
-const version = "0.0.2";
+const version = "0.0.1";
 
 
 // #region Pipes ======================== //
@@ -27,8 +27,8 @@ Vue.filter('decimal', function (value, d=0) {
 // #region Store ======================== //
 const store = new Vuex.Store({
   state: {
-    version: '',
-    favorites: ["09380000"],  
+    version: "",
+    favorites: ['09380000'],  
     favsObj: { 
       name: 'Favorites', 
       abbr: 'favs', 
@@ -111,8 +111,7 @@ const store = new Vuex.Store({
       } else {
         return { name: 'Colorado', abbr: 'co', short: 'Co' }
       }      
-    }
-    
+    }    
   },
 
   mutations: {
@@ -120,12 +119,12 @@ const store = new Vuex.Store({
 			if ( localStorage.getItem('store') ) {
         let store = JSON.parse( localStorage.getItem('store') );
 
-        if ( store.version === version ) {
+        if ( store.version === Version ) {
           this.replaceState(
             Object.assign(state, store)
           );
         } else {
-          state.version = version;
+          state.version = Version;
         }
 			}
 		},
@@ -172,6 +171,7 @@ const app = new Vue({
     title: 'Currentflow',
     placeholder: "filter...",
     filter: '',
+    innerWidth: 0,
 
     showStates: false,
     showDetail: false,
@@ -251,7 +251,6 @@ const app = new Vue({
     
     // #region Guages ================ //
     async loadGuages(abbr) {      
-      // this.guages = [];
       this.toggleFade = !this.toggleFade;
       this.filter = "";
 
@@ -319,8 +318,12 @@ const app = new Vue({
 
 
     // #region Utility ================ //
-    innerWidth() {
-      return window.innerWidth;
+    // innerWidth() {
+    //   return window.innerWidth;
+    // },
+    
+    onResize() {
+      this.innerWidth = window.innerWidth;
     },
 
     clearFilter() {
@@ -339,9 +342,13 @@ const app = new Vue({
   
   mounted() {
     this.loadGuages(this.selectedState.abbr);
+    this.innerWidth = window.innerWidth;
+    
+    window.addEventListener("resize", this.onResize);
+  },
+
+  destroyed() {
+    window.removeEventListener("resize", this.onResize);
   }
 
 });
-
-
-
