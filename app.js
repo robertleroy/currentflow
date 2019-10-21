@@ -136,7 +136,7 @@ const store = new Vuex.Store({
 
   mutations: {
     initializeStore(state) {
-			if ( localStorage.getItem('store') ) {
+      if ( localStorage.getItem('store') ) {
         let store = JSON.parse( localStorage.getItem('store') );
 
         if ( store.version === Version ) {
