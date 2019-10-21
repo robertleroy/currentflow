@@ -138,7 +138,7 @@ const store = new Vuex.Store({
     initializeStore(state) {
       if ( localStorage.getItem('store') ) {
         let store = JSON.parse( localStorage.getItem('store') );
-
+        
         if ( store.version === Version ) {
           this.replaceState(
             Object.assign(state, store)
@@ -146,8 +146,8 @@ const store = new Vuex.Store({
         } else {
           state.version = Version;
         }
-			}
-		},
+      }
+    },
 
     addFavorite (state, payload) {
       state.favorites.push(payload);
