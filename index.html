@@ -83,7 +83,7 @@
 
 
   <transition name="detail">
-    <section ref="detail" class="detail" v-if="showDetail">
+    <section ref="detail" class="detail" v-if="showDetail"  v-swipe_right="toggleDetail">
       <div class="header">
         
         <h6>{{selectedGuage.siteName | titlecase}}</h6>
@@ -96,6 +96,8 @@
  
 
       <div class="graph">
+      	<div class="swipeMask" ></div>
+	      
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 25">
           <text x="3.871" y="4.715" font-size="1.372" stroke-width=".114">
             loading...
