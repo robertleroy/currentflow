@@ -745,6 +745,9 @@ aside .listItem{
         padding:0 2rem
     }
 }
+.swipeMask {
+  z-index: 55;
+}
 .detail .graph>*{
     grid-area:1/1/1/1
 }
@@ -767,6 +770,9 @@ aside .listItem{
     border-bottom:1px solid rgba(0,0,0,0.3);
     border-radius:0;
     cursor:pointer
+}
+.detaill .row time, .detaill .row a, .detaill .row .flow {      
+  user-select: none;
 }
 .detail .fav{
     display:grid;
