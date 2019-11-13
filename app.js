@@ -117,13 +117,13 @@ const store = new Vuex.Store({
 
     states: state => {
       console.log(state.favorites);
-      let statesDisplay = [...state.statesList];
+      let list = [...state.statesList];
       
       if (state.favorites.length > 0) {        
-        statesDisplay.unshift(state.favsObj);
+        list.unshift(state.favsObj);
       }
       
-      return statesDisplay;
+      return list;
     },
 
     selectedState: state => {
