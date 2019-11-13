@@ -116,6 +116,7 @@ const store = new Vuex.Store({
     },
 
     states: state => {
+	    console.log(state.states);
       let statesDisplay = [...state.states];
       
       if (state.favorites.length > 0) {        
