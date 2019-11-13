@@ -54,7 +54,7 @@ const store = new Vuex.Store({
       abbr: 'favs', 
       short: 'Favs' 
     }, 
-    states: [
+    statesList: [
       { name: 'Alabama', abbr: 'al', short: 'Al' },
       { name: 'Alaska', abbr: 'ak', short: 'Ak' },
       { name: 'Arizona', abbr: 'az', short: 'Ariz' },
@@ -116,8 +116,8 @@ const store = new Vuex.Store({
     },
 
     states: state => {
-	    console.log(state.states);
-      let statesDisplay = [...state.states];
+      console.log(state.favorites);
+      let statesDisplay = [...state.statesList];
       
       if (state.favorites.length > 0) {        
         statesDisplay.unshift(state.favsObj);
