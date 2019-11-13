@@ -135,18 +135,20 @@ const store = new Vuex.Store({
   },
 
   mutations: {
+    
     initializeStore(state) {
       if ( localStorage.getItem('store') ) {
-        let store = JSON.parse( localStorage.getItem('store') );
-        
+        let store = JSON.parse( 
+          localStorage.getItem('store') 
+        );
+
         if ( store.version === Version ) {
-          this.replaceState(
-            Object.assign(state, store)
+          this.replaceState(state: store)
           );
         } else {
           state.version = Version;
         }
-      }
+      }      
     },
 
     addFavorite (state, payload) {
@@ -359,9 +361,18 @@ const app = new Vue({
   },    
 
   beforeCreate() {
-		this.$store.commit('initializeStore');
+    this.$store.commit('initializeStore');
     this.$store.subscribe((mutation, state) => {
-      localStorage.setItem('store', JSON.stringify(state));
+
+      let store = {
+        version: state.version,
+        favorites: state.favorites,
+        selectedState: state.selectedState,
+        graphPeriod: state.graphPeriod,
+      };
+      localStorage.setItem(
+        'store', JSON.stringify(store)
+      );
     });
 	},
   
