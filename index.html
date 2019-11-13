@@ -110,7 +110,7 @@
 
 
       <div class="row">
-        <time>Updated: &#8202; {{selectedGuage.dateTime | date("MMM D, Y &#8202; h:mm a")}}</time>
+        <time>Updated: &#8202; {{selectedGuage.dateTime | date("MMM d, Y &#8202; h:mm a")}}</time>
 
         <div class="flow">
           <small v-if='selectedGuage.value == -999999'>
@@ -164,8 +164,10 @@
 
   <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
   <script src="https://unpkg.com/vuex@2.0.0"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<script src="hammer.js"></script>
+<!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> -->
+  <script src="hammer.js"></script>
+  <script src="filters.js"></script>
+  <script src="date.js"></script>
   <script src="app.js"></script>
   
 </body>
