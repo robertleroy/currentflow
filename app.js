@@ -142,7 +142,7 @@ const store = new Vuex.Store({
           localStorage.getItem('store');
 
         if ( store.version === Version ) {
-          this.replaceState(state: store)
+          this.replaceState(store)
           );
         } else {
           state.version = Version;
