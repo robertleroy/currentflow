@@ -118,7 +118,7 @@ const store = new Vuex.Store({
     states: state => {
       let statesDisplay = [...state.states];
       
-      if (state.favorites.length) {        
+      if (state.favorites.length > 0) {        
         statesDisplay.unshift(state.favsObj);
       }
       
