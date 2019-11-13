@@ -24,22 +24,22 @@ Vue.directive("swipe_right", {
 
 
 // #region Pipes ======================== //
-Vue.filter('date', function (value, format) {
-  if (!value) return '';
-  return moment(String(value)).format(format);
-});
+// Vue.filter('date', function (value, format) {
+//   if (!value) return '';
+//   return moment(String(value)).format(format);
+// });
 
-Vue.filter('titlecase', function (value) {
-  if (!value) return '';
-  value = value.toString().toLowerCase()  ;
-   return value.replace(/(^|\s)\S/g, function(t) { return t.toUpperCase() });
-});
+// Vue.filter('titlecase', function (value) {
+//   if (!value) return '';
+//   value = value.toString().toLowerCase()  ;
+//    return value.replace(/(^|\s)\S/g, function(t) { return t.toUpperCase() });
+// });
 
-Vue.filter('decimal', function (value, d=0) {
-  if (!value) return '' ;
-  value = value * 1;
-  return value.toFixed(d);
-});
+// Vue.filter('decimal', function (value, d=0) {
+//   if (!value) return '' ;
+//   value = value * 1;
+//   return value.toFixed(d);
+// });
 // #endregion Pipes ======================== //
   
 
@@ -186,6 +186,11 @@ const store = new Vuex.Store({
 const app = new Vue({ 
   el: '#app', 
   store,
+  filters: {
+    "titlecase": titlecase,
+    "decimal": decimal,
+    "date": date
+  },
 
   data: {
     title: 'Currentflow',
