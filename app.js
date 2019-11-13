@@ -143,7 +143,11 @@ const store = new Vuex.Store({
 	);
 
         if ( store.version === Version ) {
-          this.replaceState(store);
+          // this.replaceState(store);
+          state.favorites = store.favorites;
+          state.version = store.version;
+          state.graphPeriod = store.graphPeriod
+          state.selectedState = store.selectedState;
         } else {
           state.version = Version;
         }
