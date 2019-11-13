@@ -310,7 +310,7 @@ const app = new Vue({
           siteCode: guage.sourceInfo.siteCode[0].value,
           latitude: guage.sourceInfo.geoLocation.geogLocation.latitude,
           longitude: guage.sourceInfo.geoLocation.geogLocation.longitude,
-          isFavorite: this.favorites.includes(guage.sourceInfo.siteCode[0].value)
+          isFavorite: this.favorites.indexOf(guage.sourceInfo.siteCode[0].value) != -1
         }
 
         /* Compensate for error with California
