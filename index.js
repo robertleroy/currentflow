@@ -43,6 +43,9 @@ Vue.directive( "tap", {
 const app = new Vue({ 
   el: '#app',
   store,
+  filters: {
+    "date": date,
+  },
   data: {
     title: "CurrentFlow",
     placeholder: "filter...",
@@ -70,6 +73,10 @@ const app = new Vue({
   computed: { 
     states: function() {
       return this.$store.getters.states;
+    },
+    dateNow() {
+      const dtNow = new Date();
+      return dtNow;
     }
   },
 
