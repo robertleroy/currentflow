@@ -142,7 +142,7 @@ const app = new Vue({
         abbr = 'stateCd=' + abbr;
       }
 	    
-      const favs = this.favorites;
+      const favs = Array.from(this.favorites);
       
       let response = await fetch(prefixUrl + abbr + suffixUrl);
       let data = await response.json();
