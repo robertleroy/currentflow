@@ -104,9 +104,9 @@ const store = new Vuex.Store({
 	      
 	      
         if ( store.version == Version ) {
-          this.replaceState(store);
+//           this.replaceState(store);
           // this.replaceState(
-         //    Object.assign(state, store)
+            Object.assign(state, store)
          // );
           
           // state.favorites = store.favorites;
