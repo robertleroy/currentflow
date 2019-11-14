@@ -114,6 +114,7 @@
     <section class="detail"
       v-if="showDetail"
       v-swipe:right="toggleDetail">
+
       <div class="header">
         <h6>Detail</h6>
 
@@ -122,11 +123,53 @@
           close
         </div>
       </div>
+      
 
-      <div class="body">
-        detail
-	      
+
+      <div class="graph"  >
+        <div class="swipeMask" ></div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 25">
+          <text x="3.871" y="4.715" font-size="1" stroke-width=".114">
+            loading...
+          </text>
+        </svg>
+
+        <img :src="'https://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no=' + selectedGuage.siteCode + '&parm_cd=00060&period=' +
+        this.graphPeriod ">
       </div>
+
+      <div class="row">
+        <time>Updated: {{selectedGuage.dateTime | date("MMM d, Y &#8202; h:mm aa")}}</time>
+
+        <div class="flow">
+          <small v-if='selectedGuage.value == -999999'>
+            <em>Seasonal</em>
+          </small>
+
+          <span v-else>
+            {{selectedGuage.value}} <small>cfs</small>
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <a class='googmap' :href="'https://www.google.com/maps/search/?api=1&query=' + selectedGuage.latitude + '%2C' + selectedGuage.longitude" target='_blank'>Google Maps</a>
+
+        <select v-model='graphPeriod'>
+          <option v-for="(p, index) of periods" 
+            :value="p.num" :key="index">
+            {{p.name}}
+          </option>
+        </select>
+      </div>
+
+      <div class="fav" title="add to favorites">
+        <div class="icon" @click="toggleFav(selectedGuage)">
+          {{selectedGuage.isFavorite ? 'favorite' : 'favorite_border'}}
+        </div>
+      </div>
+      
     </section>
   </transition>
 <!-- #endregion DETAIL ========== -->
