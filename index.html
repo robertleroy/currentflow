@@ -7,6 +7,7 @@
   <title>Currentflow</title>
   
   <!-- <link rel="icon" type="image/png" href="favicon.png" /> -->
+  <link rel="stylesheet" href="base.css" type="text/css">
   <link rel="stylesheet" href="style.css" type="text/css">
 </head>
   
@@ -14,151 +15,97 @@
 
 <div id="app">
 
-	<header>
+<!-- #region HEADER ========== -->
+  <header>
     <h4 @click="innerWidth < 800 ? toggleStates() : ''">
-      {{innerWidth < 423 ?  selectedState.short : selectedState.name}} 
-    </h4>
-    
-    <div class="outerGroup">
-      <div class="inputGroup">
-        <input ref="filter" type="text" :placeholder="placeholder"
-          v-model="filter">
-        <div class="icon btn"
-            v-if="filter.length"
-            @click="clearFilter">
-          close
-        </div>
-        <small>({{filteredGuages.length}})</small>      
-      </div>    
-      
-      <div class="icon btn"
-          @click="toggleAbout=!toggleAbout">
-        more_vert
-      </div>
-    </div>
-	</header>
+      <!-- {{innerWidth < 423 ?  selectedState.short : selectedState.name}}  -->
+      {{title}}
+    </h4>   
 
-  <aside ref="aside" v-swipe_left="toggleStates">
-    <div class="icon btn closeMenu"
+    <small @click="toggleDetail">
+      {{ "w:" + innerWidth + "  h:" + innerHeight }}      
+    </small>    
+	</header> 
+<!-- #endregion HEADER ========== -->
+
+<!-- #region STATES ========== -->
+  <transition name="closeMenu">
+    <div class="icon closeMenu"
+      v-if="showStates && innerWidth < 800"
       @click="toggleStates">
       close
     </div>
-
-    <div class="states">          
-      <div class="listItem" :key="state.abbr"
-          v-for="state of states"
-          @click="selectState(state)">
-        {{state.name}}
-      </div> 
-    </div>
-  </aside>
-
-<section ref="guages" class="guages" v-swipe_right="toggleStates"> 
-    <div class="loader">loading...</div>
-    
-    <transition name="fade" mode="out-in"> 
-    <div class="list" :key="toggleFade">    
-      <div class="listItem" :key="index"
-        v-for="(guage,index) of filteredGuages"> 
-        <div class="siteName"
-          @click="toggleDetail(guage)">
-          {{guage.siteName | titlecase}}
-        </div>
-        <div v-if="guage.value === '-999999'">...</div>
-        <div v-else-if="guage.value === '-999998'">err</div> 
-        <div v-else>{{guage.value | decimal}} <small>cfs</small></div>
-      </div>      
-    </div>
   </transition>
-</section>
 
+  <transition name="slideRight">    
+    <section class="states list" 
+      v-if="showStates || innerWidth > 800"
+      v-swipe="mainSwipe">
 
-  
+      <div class="state listItem" :key="index"
+        v-for="(state, index) of states">
+        {{ state.name }}
+      </div>
+      
+    </section>
+  </transition>
+<!-- #endregion STATES ========== -->
+
+<!-- #region GUAGES ========== -->
+  <transition name="slideLeft">    
+    <section class="guages list"
+        v-if="!showStates || innerWidth > 800"
+        v-swipe="mainSwipe">
+
+      <div class="guage listItem" :key="index"
+        v-for="index of 30">
+        <div>item</div>
+        <div>{{ index }}</div>
+      </div>
+      
+    </section>
+  </transition>
+<!-- #endregion GUAGES ========== -->
+
+<!-- #region DETAIL ========== -->
   <transition name="fade">
-    <div class="detailMask" 
-      v-if="showDetail"
-      @click="toggleDetail"></div>
+    <aside class="detailMask"
+        v-if="showDetail"
+         @click="toggleDetail">
+    </aside>
   </transition>
-   
 
-
-  <transition name="detail">
-    <section ref="detail" class="detail" v-if="showDetail"  v-swipe_right="toggleDetail">
+  <transition name="slideLeft">    
+    <section class="detail"
+      v-if="showDetail"
+      v-swipe:right="toggleDetail">
       <div class="header">
-        
-        <h6>{{selectedGuage.siteName | titlecase}}</h6>
+        <h6>Detail</h6>
 
         <div class="icon btn closeDetail"
           @click="toggleDetail">
           close
         </div>
       </div>
+
+      <div class="body">
+        detail
+      </div>
+    </section>
+  </transition>
+<!-- #endregion DETAIL ========== -->
+
+<!-- #region ABOUT ========== -->
+  <transition name="">    
+    <section class="about">
+      
+    </section>
+  </transition>
+<!-- #endregion ABOUT ========== -->
  
 
-      <div class="graph">
-      	<div class="swipeMask" ></div>
-	      
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 25">
-          <text x="3.871" y="4.715" font-size="1.372" stroke-width=".114">
-            loading...
-          </text>
-        </svg>
-
-        <img :src="'https://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no=' + selectedGuage.siteCode + '&parm_cd=00060&period=' +
-        this.graphPeriod ">
-      </div>
-
-
-      <div class="row">
-        <time>Updated: &#8202; {{selectedGuage.dateTime | date("MMM d, Y &#8202; h:mm a")}}</time>
-
-        <div class="flow">
-          <small v-if='selectedGuage.value == -999999'>
-            <em>Seasonal</em>
-          </small>
-
-          <span v-else>
-            {{selectedGuage.value}} <small>cfs</small>
-          </span>
-        </div>
-      </div>
-
-      <div class="row">
-        <a class='googmap' :href="'https://www.google.com/maps/search/?api=1&query=' + selectedGuage.latitude + '%2C' + selectedGuage.longitude" target='_blank'>Google Maps</a>
-
-        <select v-model='graphPeriod'>
-          <option v-for="(p, index) of periods" 
-            :value="p.num" :key="index">
-            {{p.name}}
-          </option>
-        </select>
-      </div>
-
-      <div class="fav">
-        <div class="icon" @click="toggleFav(selectedGuage)">
-          {{selectedGuage.isFavorite ? 'favorite' : 'favorite_border'}}
-        </div>
-      </div>
-    </section>
-  </transition>
-
-  <transition name="fade">
-    <section class="about" v-if="toggleAbout">
-      <div class="aboutText">
-        <h4 class='description'><span>Currentflow</span> presents real-time streamflow data compiled by the U.S Geological Survey.</h4>
-
-        <div class="icon btn"
-            @click="toggleAbout = !toggleAbout">
-          close
-        </div>
-      </div>
-
-    <img src="https://robertleroy.github.io/crate/svg/river.svg" class="river" type="image/svg+xml !important">
-
-    </section>
-  </transition>
-
-</div> <!-- app -->
+</div>
+<!-- app -->
     
     
 
@@ -166,8 +113,7 @@
   <script src="https://unpkg.com/vuex@2.0.0"></script>
 <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> -->
   <script src="hammer.js"></script>
-  <script src="filters.js"></script>
-  <script src="date.js"></script>
+  <script src="store.js"></script>
   <script src="app.js"></script>
   
 </body>
