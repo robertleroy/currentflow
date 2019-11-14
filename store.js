@@ -100,21 +100,6 @@ const store = new Vuex.Store({
   },
   
   mutations: {  
-    // initializeStore(state) { 
-    //   if ( localStorage.getItem('store') ) {
-    //     let store = JSON.parse( 
-    //       localStorage.getItem('store')
-    //     );
-
-    //     if ( store.version == Version ) {
-    //       this.replaceState(
-    //         Object.assign(state, store)
-    //       );
-    //     } else {
-    //       state.version = Version;
-    //     }
-    //   }
-    // },
 
     initializeStore(state) {
       if ( localStorage.getItem('store') ) {
@@ -123,30 +108,16 @@ const store = new Vuex.Store({
         );
 
         if ( store.version === Version ) {
-          this.replaceState(store);
+					// this.replaceState(store);
+					state.favorites = store.favorites;
+					state.version = store.version;
+					state.graphPeriod = store.graphPeriod
+					state.selectedState = store.selectedState;  
         } else {
           state.version = Version;
         }
       }      
     },
-
-    // initializeStore(state) {
-    //   if ( localStorage.getItem('store') ) {
-    //     let store = JSON.parse( 
-    //       localStorage.getItem('store')
-    //     );
-    //     if ( store.version === Version ) {
-    //       // this.replaceState(store);
-    //       state.favorites = store.favorites;
-    //       state.version = store.version;
-    //       state.graphPeriod = store.graphPeriod
-    //       state.selectedState = store.selectedState;          
- 
-    //     } else {
-    //       state.version = Version;
-    //     }
-    //   }      
-    // },
 
 
     addFavorite (state, payload) {
