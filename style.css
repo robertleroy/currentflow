@@ -63,9 +63,30 @@ header h4:active {
 	}
 }
 
-main {
-	padding: 1rem 2rem;
-	overflow-y: auto
+header .outerGroup {
+	display: grid;
+	grid-auto-flow: column;
+	align-items: center;
+	grid-gap: 0.5rem
+}
+
+header .inputGroup {
+	display: grid;
+	grid-auto-flow: column;
+	align-items: center;
+	grid-gap: 0.5rem;
+	box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.5)
+}
+
+header .inputGroup [type="text"] {
+	min-width: 3rem;
+	border-radius: 0;
+	padding-top: 0;
+	padding-bottom: 0
+}
+
+header .inputGroup:focus-within {
+	box-shadow: 0 1px 0 0 dodgerblue
 }
 
 @media (min-width: 400px) {
@@ -110,7 +131,8 @@ main {
 	left: 0;
 	bottom: 0;
 	overflow-y: auto;
-	z-index: 10
+	z-index: 10;
+	background: #f7f7f7
 }
 
 @media (min-width: 800px) {
@@ -120,13 +142,28 @@ main {
 }
 
 .guages {
-	max-width: 900px
+	position: relative;
+	max-width: 900px;
+	background: #f7f7f7
 }
 
 @media (min-width: 800px) {
 	.guages {
 		margin-left: 300px
 	}
+}
+
+.loader {
+	position: absolute;
+	top: 1rem;
+	left: 4rem;
+	font-family: "Inconsolata", "Monaco", "Menlo", "Consolas", "Courier New", Courier, monospace;
+	z-index: -1
+}
+
+.loader div {
+	display: inline-block;
+	animation: spinner 2s linear infinite
 }
 
 .detailMask {
@@ -221,3 +258,4 @@ main {
 .closeMenu-leave-to {
 	opacity: 0
 }
+COPY TO CLIPBOARD
