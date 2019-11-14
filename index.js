@@ -196,7 +196,7 @@ const app = new Vue({
     version () {
       return this.$store.state.version;
     },
-	  
+    
     favorites () {
       return this.$store.getters.favorites;
     },
@@ -244,7 +244,6 @@ const app = new Vue({
     },
     
     toggleFav(guage) {
-      // console.log(guage.isFavorite);
       if (guage.isFavorite) {
         this.$store.dispatch('deleteFavAsync', guage.siteCode);
       } else {
@@ -292,7 +291,9 @@ const app = new Vue({
       } else {
         abbr = 'stateCd=' + abbr;
       }
-	    
+
+      let favs = Array.from(this.favorites);
+      
       let response = await fetch(prefixUrl + abbr + suffixUrl);
       let data = await response.json();
       let timeSeries = data.value.timeSeries
@@ -304,7 +305,7 @@ const app = new Vue({
           siteCode: guage.sourceInfo.siteCode[0].value,
           latitude: guage.sourceInfo.geoLocation.geogLocation.latitude,
           longitude: guage.sourceInfo.geoLocation.geogLocation.longitude,
-          isFavorite: this.favorites.includes(guage.sourceInfo.siteCode[0].value)
+          isFavorite: favs.includes(guage.sourceInfo.siteCode[0].value)
         }
 
         /* Compensate for error with California
@@ -324,29 +325,34 @@ const app = new Vue({
     // #endregion Guages ================ //
   },
 
-  beforeCreate() {
-    this.$store.commit('initializeStore');
+  beforeCreate() {    
+		this.$store.commit('initializeStore');
     this.$store.subscribe((mutation, state) => {
-      
+
       let store = {
         version: state.version,
         favorites: state.favorites,
         selectedState: state.selectedState,
         graphPeriod: state.graphPeriod,
       };
-      
-      localStorage.setItem( 'store', JSON.stringify(store));
+
+      localStorage.setItem(
+        'store', JSON.stringify(store)
+      );
     });
-  },
-  
+	},
+
   mounted() {
     this.getSize();
     window.addEventListener("resize", this.getSize); 
 
-    this.loadGuages(this.selectedState.abbr);    
+    this.loadGuages(this.selectedState.abbr);   
+    
+    console.log(typeof(this.states)); 
   },
 
   destroyed() {
     window.removeEventListener("resize", this.onResize);
   }
 });
+
