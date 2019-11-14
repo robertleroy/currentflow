@@ -45,9 +45,13 @@ const app = new Vue({
   store,
   filters: {
     "date": date,
+    "titlecase": titlecase,
+    "decimal": decimal,
+    "number": number
   },
   data: {
     lorem: "lorem ipsum dolor sit amet consectetur",
+    pi: 3.14159265359,
     title: "CurrentFlow",
     placeholder: "filter...",
     filter: '',
