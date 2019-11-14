@@ -78,6 +78,10 @@ const app = new Vue({
   },
 
   computed: {     
+    version () {
+      return this.$store.state.version;
+    },
+	  
     favorites () {
       return this.$store.getters.favorites;
     },
@@ -205,22 +209,22 @@ const app = new Vue({
     // #endregion Guages ================ //
   },
 
-  // beforeCreate() {    
-	// 	this.$store.commit('initializeStore');
-  //   this.$store.subscribe((mutation, state) => {
+  beforeCreate() {    
+		this.$store.commit('initializeStore');
+    this.$store.subscribe((mutation, state) => {
 
-  //     let store = {
-  //       version: state.version,
-  //       favorites: state.favorites,
-  //       selectedState: state.selectedState,
-  //       graphPeriod: state.graphPeriod,
-  //     };
+      let store = {
+        version: state.version,
+        favorites: state.favorites,
+        selectedState: state.selectedState,
+        graphPeriod: state.graphPeriod,
+      };
 
-  //     localStorage.setItem(
-  //       'store', JSON.stringify(store)
-  //     );
-  //   });
-	// },
+      localStorage.setItem(
+        'store', JSON.stringify(store)
+      );
+    });
+	},
 
   mounted() {
     this.getSize();
