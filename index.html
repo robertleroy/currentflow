@@ -22,9 +22,31 @@
       {{title}}
     </h4>   
 
-    <small @click="toggleDetail">
-      {{ "w:" + innerWidth + "  h:" + innerHeight }}      
-    </small>    
+
+    <div class="outerGroup">
+      <div class="inputGroup">
+        <input ref="filter" type="text" :placeholder="placeholder"
+          v-model="filter">
+        <div class="icon btn"
+            v-if="filter.length"
+            @click="clearFilter">
+          close
+        </div>
+
+        <small>({{filteredGuages.length}})</small>     
+        
+        <!-- <small @click="toggleDetail">
+          {{ "w:" + innerWidth + "  h:" + innerHeight }}      
+        </small>     -->
+
+      </div>    
+      
+      <div class="icon btn"
+          @click="toggleAbout=!toggleAbout">
+        more_vert
+      </div>
+    </div>
+
 	</header> 
 <!-- #endregion HEADER ========== -->
 
@@ -43,7 +65,8 @@
       v-swipe="mainSwipe">
 
       <div class="state listItem" :key="index"
-        v-for="(state, index) of states">
+        v-for="(state, index) of states"
+        @click="selectState(state)">
         {{ state.name }}
       </div>
       
@@ -53,15 +76,28 @@
 
 <!-- #region GUAGES ========== -->
   <transition name="slideLeft">    
-    <section class="guages list"
+    <section class="guages"
         v-if="!showStates || innerWidth > 800"
         v-swipe="mainSwipe">
 
-      <div class="guage listItem" :key="index"
-        v-for="index of 30">
-        <div>item</div>
-        <div>{{ index }}</div>
-      </div>
+      <transition name="fade" mode="out-in"> 
+        <div class="list" :key="toggleFade" v-if="!loadingGuages">    
+          <div class="listItem" :key="index"
+            v-for="(guage,index) of filteredGuages"> 
+            <div class="siteName"
+              @click="toggleDetail(guage)">
+              {{guage.siteName | titlecase}}
+            </div>
+            <div v-if="guage.value === '-999999'">...</div>
+            <div v-else-if="guage.value === '-999998'">err</div> 
+            <div v-else>{{guage.value | decimal}} <small>cfs</small></div>
+          </div>      
+        </div>
+
+        <div class="loader" v-else>
+          <div>loading ...</div>
+        </div>
+      </transition>
       
     </section>
   </transition>
