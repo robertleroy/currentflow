@@ -47,6 +47,7 @@ const app = new Vue({
     "date": date,
   },
   data: {
+    lorem: "lorem ipsum dolor sit amet consectetur",
     title: "CurrentFlow",
     placeholder: "filter...",
     filter: '',
