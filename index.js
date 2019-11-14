@@ -5,7 +5,7 @@ const Version = "0.0.1";
  
 const store = new Vuex.Store({
   state: {
-		version: "",
+    version: "",
     states: [
       { name: 'Alabama', abbr: 'al', short: 'Al' },
       { name: 'Alaska', abbr: 'ak', short: 'Ak' },
@@ -101,9 +101,10 @@ const store = new Vuex.Store({
         );
 
         if ( store.version == Version ) {
-          this.replaceState(
-            Object.assign(state, store)
-          );
+          this.replaceState(store);
+          // this.replaceState(
+         //    Object.assign(state, store)
+         // );
           
           // state.favorites = store.favorites;
           // state.version = store.version;
