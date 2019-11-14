@@ -142,8 +142,6 @@ const app = new Vue({
         abbr = 'stateCd=' + abbr;
       }
 	    
-      const favs = Array.from(this.favorites);
-      
       let response = await fetch(prefixUrl + abbr + suffixUrl);
       let data = await response.json();
       let timeSeries = data.value.timeSeries
@@ -155,7 +153,7 @@ const app = new Vue({
           siteCode: guage.sourceInfo.siteCode[0].value,
           latitude: guage.sourceInfo.geoLocation.geogLocation.latitude,
           longitude: guage.sourceInfo.geoLocation.geogLocation.longitude,
-          isFavorite: favs.includes(guage.sourceInfo.siteCode[0].value)
+          isFavorite: this.favorites.includes(guage.sourceInfo.siteCode[0].value)
         }
 
         /* Compensate for error with California
