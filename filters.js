@@ -10,6 +10,13 @@ const decimal = function (value, d=0) {
   return value.toFixed(d);
 };
 
+const number = function (value, d=0) {
+  if (!value) return '' ;
+  value = value * 1;
+  value = value.toLocaleString('en', {maximumFractionDigits:d, useGrouping:false})*1  
+ return value;
+};
+
 
 // #region DATE FILTER =========== //
 
