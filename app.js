@@ -116,10 +116,9 @@ const store = new Vuex.Store({
     },
 
     states: state => {
-      console.log(state.favorites);
       let list = [...state.statesList];
       
-      if (state.favorites.length > 0) {        
+      if (state.favorites.length) {        
         list.unshift(state.favsObj);
       }
       
@@ -309,8 +308,8 @@ const app = new Vue({
           dateTime: "1970-01-01T00:00:00.000Z",
           siteCode: guage.sourceInfo.siteCode[0].value,
           latitude: guage.sourceInfo.geoLocation.geogLocation.latitude,
-          longitude: guage.sourceInfo.geoLocation.geogLocation.longitude,
-          isFavorite: this.favorites.indexOf(guage.sourceInfo.siteCode[0].value) != -1
+          longitude: guage.sourceInfo.geoLocation.geogLocation.longitude,isFavorite: 
+          this.favorites.includes(guage.sourceInfo.siteCode[0].value)
         }
 
         /* Compensate for error with California
