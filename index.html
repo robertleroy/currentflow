@@ -22,199 +22,194 @@
   
 <body>
 
-<div id="app">
 
-<!-- #region HEADER ========== -->
-  <header>
-    <h4 @click="innerWidth < 800 ? toggleStates() : ''">
-      {{innerWidth < 423 ?  selectedState.short : selectedState.name}} 
-    </h4>   
+	<div id="app">
 
-
-    <div class="outerGroup">
-      <div class="inputGroup">
-        <input ref="filter" type="text" :placeholder="placeholder"
-          v-model="filter">
-        <div class="icon btn"
-            v-if="filter.length"
-            @click="clearFilter">
-          close
-        </div>
-
-        <small>({{filteredGuages.length}})</small>     
-        
-        <!-- <small @click="toggleDetail">
-          {{ "w:" + innerWidth + "  h:" + innerHeight }}      
-        </small>     -->
-
-      </div>    
-      
-      <div class="icon btn"
-          @click="toggleAbout=!toggleAbout">
-        more_vert
-      </div>
-    </div>
-
-	</header> 
-<!-- #endregion HEADER ========== -->
-
-<!-- #region STATES ========== -->
-  <transition name="closeMenu">
-    <div class="icon closeMenu"
-      v-if="showStates && innerWidth < 800"
-      @click="toggleStates">
-      close
-    </div>
-  </transition>
-
-  <transition name="slideRight">    
-    <section class="states list" 
-      v-if="showStates || innerWidth > 800"
-      v-swipe="mainSwipe">
-
-      <div class="state listItem" :key="index"
-        v-for="(state, index) of states"
-        @click="selectState(state)">
-        {{ state.name }}
-      </div>
-      
-    </section>
-  </transition>
-<!-- #endregion STATES ========== -->
-
-<!-- #region GUAGES ========== -->
-  <transition name="slideLeft">    
-    <section class="guages"
-        v-if="!showStates || innerWidth > 800"
-        v-swipe="mainSwipe">
-
-      <transition name="fade" mode="out-in"> 
-        <div class="list" :key="toggleFade" v-if="!loadingGuages">    
-          <div class="listItem" :key="index"
-            v-for="(guage,index) of filteredGuages"> 
-            <div class="siteName"
-              @click="toggleDetail(guage)">
-              {{guage.siteName | titlecase}}
-            </div>
-            <div v-if="guage.value === '-999999'">...</div>
-            <div v-else-if="guage.value === '-999998'">err</div> 
-            <div v-else>{{guage.value | decimal}} <small>cfs</small></div>
-          </div>      
-        </div>
-
-        <div class="loader" v-else>
-          <div>loading ...</div>
-        </div>
-      </transition>
-      
-    </section>
-  </transition>
-<!-- #endregion GUAGES ========== -->
-
-<!-- #region DETAIL ========== -->
-  <transition name="fade">
-    <aside class="detailMask"
-        v-if="showDetail"
-         @click="toggleDetail">
-    </aside>
-  </transition>
-
-  <transition name="slideLeft">    
-    <section class="detail"
-      v-if="showDetail"
-      v-swipe:right="toggleDetail">
-
-      <div class="header">
-        <h6>{{selectedGuage.siteName | titlecase}}</h6>
-
-        <div class="icon btn closeDetail"
-          @click="toggleDetail">
-          close
-        </div>
-      </div>
-      
+	<!-- #region HEADER ========== -->
+		<header>
+			<h4 @click="innerWidth < 800 ? toggleStates() : ''">
+				{{innerWidth < 423 ?  selectedState.short : selectedState.name}} 
+			</h4>   
 
 
-      <div class="graph"  >
-        <div class="swipeMask" ></div>
+			<div class="outerGroup">
+				<div class="inputGroup">
+					<input ref="filter" type="text" :placeholder="placeholder"
+						v-model="filter">
+					<div class="icon btn"
+							v-if="filter.length"
+							@click="clearFilter">
+						close
+					</div>
 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 25">
-          <text x="3.871" y="4.715" font-size="1" stroke-width=".114">
-            loading...
-          </text>
-        </svg>
+					<small>({{filteredGuages.length}})</small>     
+				</div>    
 
-        <img :src="'https://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no=' + selectedGuage.siteCode + '&parm_cd=00060&period=' +
-        this.graphPeriod ">
-      </div>
+				<div class="icon btn btnAbout"
+						@click="toggleAbout=!toggleAbout">
+					more_vert
+				</div>
+			</div>
 
-      <div class="row">
-        <time>
-          <div>Updated: {{selectedGuage.dateTime | date(" h:mm aa")}}</div>
-          <div>{{selectedGuage.dateTime | date("ddd MMM d, Y")}}</div>
-        </time>
+		</header> 
+	<!-- #endregion HEADER ========== -->
 
-        <div class="flow">
-          <small v-if='selectedGuage.value == -999999'>
-            <em>Seasonal</em>
-          </small>
+	<!-- #region STATES ========== -->
+		<transition name="closeMenu">
+			<div class="icon closeMenu"
+				v-if="showStates && innerWidth < 800"
+				@click="toggleStates">
+				close
+			</div>
+		</transition>
 
-          <span v-else>
-            {{selectedGuage.value}} <small>cfs</small>
-          </span>
-        </div>
-      </div>
+		<transition name="slideRight">    
+			<section class="states list" 
+				v-if="showStates || innerWidth > 800"
+				v-swipe="mainSwipe">
 
-      <div class="row">
-        <a class='googmap' :href="'https://www.google.com/maps/search/?api=1&query=' + selectedGuage.latitude + '%2C' + selectedGuage.longitude" target='_blank'>Google Maps</a>
+				<div class="state listItem" :key="index"
+					v-for="(state, index) of states"
+					@click="selectState(state)">
+					{{ state.name }}
+				</div>
 
-        <select v-model='graphPeriod'>
-          <option v-for="(p, index) of periods" 
-            :value="p.num" :key="index">
-            {{p.name}}
-          </option>
-        </select>
-      </div>
+			</section>
+		</transition>
+	<!-- #endregion STATES ========== -->
 
-      <div class="fav" title="add to favorites">
-        <div class="icon" @click="toggleFav(selectedGuage)">
-          {{selectedGuage.isFavorite ? 'favorite' : 'favorite_border'}}
-        </div>
-      </div>
-      
-    </section>
-  </transition>
-<!-- #endregion DETAIL ========== -->
+	<!-- #region GUAGES ========== -->
+		<transition name="slideLeft">    
+			<section class="guages"
+					v-if="!showStates || innerWidth > 800"
+					v-swipe="mainSwipe">
 
-<!-- #region ABOUT ========== -->
+				<transition name="fade" mode="out-in"> 
+					<div class="list" :key="toggleFade" v-if="!loadingGuages">    
+						<div class="listItem" :key="index"
+							v-for="(guage,index) of filteredGuages"> 
+							<div class="siteName"
+								@click="toggleDetail(guage)">
+								{{guage.siteName | titlecase}}
+							</div>
+							<div v-if="guage.value === '-999999'">...</div>
+							<div v-else-if="guage.value === '-999998'">err</div> 
+							<div v-else>{{guage.value | decimal}} <small>cfs</small></div>
+						</div>      
+					</div>
 
-  <transition name="fade">
-    <section class="about" v-if="toggleAbout">
-      <div class="aboutText">
-        <h4 class='description'><span>Currentflow</span> presents real-time streamflow data compiled by the U.S Geological Survey.</h4>
+					<div class="loader" v-else>
+						<div>loading ...</div>
+					</div>
+				</transition>
 
-        <div class="icon btn"
-            @click="toggleAbout = !toggleAbout">
-          close
-        </div>
-      </div>
+			</section>
+		</transition>
+	<!-- #endregion GUAGES ========== -->
 
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 96" class="river">
-        <g fill-rule="evenodd">
-          <path fill="#cb7800" d="M111.58.005C99.142-.218 85.942 6.441 62.844 19.49c12.481 5.3 28.56 14.977 53.976 29.305 3.679 2.074 7.438 4.033 11.18 5.93 3.741-1.897 7.5-3.857 11.179-5.93 14.69-8.281 26.163-14.95 35.734-20.188C142.308 10.349 126.501.27 111.577.005z"/>
-          <path fill="#a03400" d="M42.564 14.547C31.042 14.753 19.616 20.502 0 31.516V96h.398s104.368-.139 80.264-22.47c-11.859-10.987 44.36-17.446 44.892-17.507.955-.475 1.885-.913 2.844-1.4-3.742-1.895-7.5-3.854-11.18-5.93-41.4-23.336-58.128-34.442-74.655-34.146z"/>
-          <path fill="#006b45" d="M213.436 14.547c-16.527-.296-33.258 10.81-74.656 34.148-4.58 2.58-9.266 5.005-13.907 7.313l.047-.008s-.356.162-.68.312c-.114.057-.221.108-.335.164-4.05 2.005-17.265 10.144 19.57 16.703C187.387 80.999 167.256 96 167.256 96H256V31.517c-19.615-11.014-31.04-16.763-42.564-16.97z"/>
-        </g>
-        <path fill="#49a6ff" d="M125.32 56s-56.968 6.492-45.052 17.532C104.368 95.862 0 96 0 96h167.652s20.135-15-23.78-22.82C101.55 65.646 125.32 56 125.32 56z"/>
-      </svg>
+	<!-- #region DETAIL ========== -->
+		<transition name="fade">
+			<aside class="detailMask"
+					v-if="showDetail"
+					 @click="toggleDetail">
+			</aside>
+		</transition>
 
-    </section>
-  </transition>
-<!-- #endregion ABOUT ========== -->
- 
+		<transition name="slideLeft">    
+			<section class="detail"
+				v-if="showDetail"
+				v-swipe:right="toggleDetail">
 
-</div>
-<!-- app -->
+				<div class="header">
+					<h6>{{selectedGuage.siteName | titlecase}}</h6>
+
+					<div class="icon btn closeDetail"
+						@click="toggleDetail">
+						close
+					</div>
+				</div>    
+
+
+				<div class="graph"  >
+					<div class="swipeMask" ></div>
+
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 25">
+						<text x="3.871" y="4.715" font-size="1" stroke-width=".114">
+							loading...
+						</text>
+					</svg>
+
+					<img :src="'https://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no=' + selectedGuage.siteCode + '&parm_cd=00060&period=' +
+					this.graphPeriod ">
+				</div>
+
+				<div class="row">
+					<time>
+						<div>Updated: {{selectedGuage.dateTime | date(" h:mm aa")}}</div>
+						<div>{{selectedGuage.dateTime | date("ddd MMM d, Y")}}</div>
+					</time>
+
+					<div class="flow">
+						<small v-if='selectedGuage.value == -999999'>
+							<em>Seasonal</em>
+						</small>
+
+						<span v-else>
+							{{selectedGuage.value}} <small>cfs</small>
+						</span>
+					</div>
+				</div>
+
+				<div class="row">
+					<a class='googmap' :href="'https://www.google.com/maps/search/?api=1&query=' + selectedGuage.latitude + '%2C' + selectedGuage.longitude" target='_blank'>Google Maps</a>
+
+					<select v-model='graphPeriod'>
+						<option v-for="(p, index) of periods" 
+							:value="p.num" :key="index">
+							{{p.name}}
+						</option>
+					</select>
+				</div>
+
+				<div class="fav" title="add to favorites">
+					<div class="icon" @click="toggleFav(selectedGuage)">
+						{{selectedGuage.isFavorite ? 'favorite' : 'favorite_border'}}
+					</div>
+				</div>
+
+			</section>
+		</transition>
+	<!-- #endregion DETAIL ========== -->
+
+	<!-- #region ABOUT ========== -->
+
+		<transition name="fade">
+			<section class="about" v-if="toggleAbout">
+				<div class="aboutText">
+					<h4 class='description'><span>Currentflow</span> presents real-time streamflow data compiled by the U.S Geological Survey.</h4>
+
+					<div class="icon btn"
+							@click="toggleAbout = !toggleAbout">
+						close
+					</div>
+				</div>
+
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 96" class="river">
+					<g fill-rule="evenodd">
+						<path fill="#cb7800" d="M111.58.005C99.142-.218 85.942 6.441 62.844 19.49c12.481 5.3 28.56 14.977 53.976 29.305 3.679 2.074 7.438 4.033 11.18 5.93 3.741-1.897 7.5-3.857 11.179-5.93 14.69-8.281 26.163-14.95 35.734-20.188C142.308 10.349 126.501.27 111.577.005z"/>
+						<path fill="#a03400" d="M42.564 14.547C31.042 14.753 19.616 20.502 0 31.516V96h.398s104.368-.139 80.264-22.47c-11.859-10.987 44.36-17.446 44.892-17.507.955-.475 1.885-.913 2.844-1.4-3.742-1.895-7.5-3.854-11.18-5.93-41.4-23.336-58.128-34.442-74.655-34.146z"/>
+						<path fill="#006b45" d="M213.436 14.547c-16.527-.296-33.258 10.81-74.656 34.148-4.58 2.58-9.266 5.005-13.907 7.313l.047-.008s-.356.162-.68.312c-.114.057-.221.108-.335.164-4.05 2.005-17.265 10.144 19.57 16.703C187.387 80.999 167.256 96 167.256 96H256V31.517c-19.615-11.014-31.04-16.763-42.564-16.97z"/>
+					</g>
+					<path fill="#49a6ff" d="M125.32 56s-56.968 6.492-45.052 17.532C104.368 95.862 0 96 0 96h167.652s20.135-15-23.78-22.82C101.55 65.646 125.32 56 125.32 56z"/>
+				</svg>
+
+			</section>
+		</transition>
+	<!-- #endregion ABOUT ========== -->
+
+
+	</div>
+	<!-- app -->
     
     
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
