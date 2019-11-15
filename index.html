@@ -223,6 +223,30 @@
   <script src="./js/directives.js"></script>
   <script src="./js/filters.js"></script>
   <script src="./index.js"></script>
+	
+	
+	<script>
+		if ("serviceWorker" in navigator) {
+			if (navigator.serviceWorker.controller) {
+					console.log("Active service worker: ");
+			} else {
+				navigator.serviceWorker.register("sw.js", { scope: "./" })
+				.then(function(reg) {
+					if(reg.installing) {
+						console.log('service worker: installing...');
+					} else if(reg.waiting) {
+						console.log('service worker: installed...');
+					} else if(reg.active) {
+						console.log('service worker: registration active for scope: " + reg.scope ::');
+					}
+				}).catch(function(error) {
+					console.log('service worker: registration FAILED: ' + error);
+				});
+			}
+		}
+	</script> <!-- serviceWorker -->
+	
+	
   
 </body>
 </html>
