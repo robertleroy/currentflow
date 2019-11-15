@@ -130,9 +130,10 @@
         <div class="swipeMask" ></div>
 
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 25">
-          <text x="3.871" y="4.715" font-size="1" stroke-width=".114">
-            loading...
-          </text>
+          <time>
+						<div>Updated: {{selectedGuage.dateTime | date(" h:mm aa")}}</div>
+						<div>{{selectedGuage.dateTime | date("ddd MMM d, Y")}}</div>
+					</time>
         </svg>
 
         <img :src="'https://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no=' + selectedGuage.siteCode + '&parm_cd=00060&period=' +
