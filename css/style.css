@@ -171,8 +171,8 @@ header .inputGroup:focus-within {
 
 .loader {
 	position: absolute;
-	top: 1.5rem;
-	left: 4rem;
+	top: 10vh;
+	left: 10vw;
 	font-family: "Inconsolata", "Monaco", "Menlo", "Consolas", "Courier New", Courier, monospace
 }
 
@@ -201,6 +201,7 @@ header .inputGroup:focus-within {
 	width: 100%;
 	max-width: 630px;
 	background: #f7f7f7;
+	overflow-y: auto;
 	z-index: 35
 }
 
@@ -361,4 +362,3 @@ header .inputGroup:focus-within {
 .closeMenu-leave-to {
 	opacity: 0
 }
-
