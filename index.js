@@ -278,9 +278,7 @@ const app = new Vue({
     this.getSize();
     window.addEventListener("resize", this.getSize); 
 
-    this.loadGuages(this.selectedState.abbr);   
-    
-    console.log(typeof(this.states)); 
+    this.loadGuages(this.selectedState.abbr);  
   },
 
   destroyed() {
