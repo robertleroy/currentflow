@@ -84,7 +84,7 @@ const store = new Vuex.Store({
       commit("deleteFavorite", payload);
     },
   }
-})
+});
 
 
 const app = new Vue({ 
@@ -199,14 +199,12 @@ const app = new Vue({
       this.$store.commit("setSelectedState", state);
       this.toggleStates();
       this.loadGuages(state.abbr);
-      // console.log(state);
     },
 
     // #region Guages ================ //
     async loadGuages(abbr) {   
       this.loadingGuages = true;
 
-      // console.log("loadGuages(abbr)", abbr); 
       this.toggleFade = !this.toggleFade;
       this.filter = "";
 
@@ -257,8 +255,8 @@ const app = new Vue({
     // #endregion Guages ================ //
   },
 
-  beforeCreate() {
-  	this.$store.commit('initializeStore');
+  beforeCreate() {    
+		this.$store.commit('initializeStore');
     this.$store.subscribe((mutation, state) => {
 
       let store = {
