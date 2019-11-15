@@ -4,7 +4,7 @@ const Version = "0.0.1";
 
 const store = new Vuex.Store({
   state: {
-		version: "",
+    version: "",
     states: States,
     favorites: ['09380000'],  
     favsObj: { 
@@ -257,8 +257,8 @@ const app = new Vue({
     // #endregion Guages ================ //
   },
 
-  beforeCreate() {    
-		this.$store.commit('initializeStore');
+  beforeCreate() {
+  	this.$store.commit('initializeStore');
     this.$store.subscribe((mutation, state) => {
 
       let store = {
