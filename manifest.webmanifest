@@ -10,8 +10,8 @@
 	"description" : "USGS Streamflow",
 	"orientation" : "any",
 	"background_color" : "transparent",
-	"related_applications" : "",
-	"prefer_related_applications" : "false",
+	"related_applications" : [],
+	"prefer_related_applications" : false,
 	"icons" : [
 		{
 			"src": "https://robertleroy.github.io/currentflow/img/icon-24.png",
