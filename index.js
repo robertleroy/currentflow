@@ -1,8 +1,40 @@
 // app.js //
 
-const Version = "0.1";
+const storagePlugin = store => {
+  const store_key = "currentflow";
+  const Version = "0.1.0";
+
+  store.subscribe((mutation, state) => {
+
+    let obj = {
+      version: state.version,
+      volume: state.volume,
+      currentPanel: state.currentPanel,
+      autoplay: state.autoplay,
+    };
+    
+    localStorage.setItem(
+      store_key, JSON.stringify(obj)
+    );
+
+  })
+
+  let storage_obj = JSON.parse( 
+    localStorage.getItem(store_key)
+  );
+  
+  if ( storage_obj ) {   
+    if ( storage_obj.version === Version ) { 
+      Object.assign(store.state, storage_obj);      
+      // store.replaceState(storage_obj);
+    } else {      
+      store.commit("updateVersion", Version);  
+    }
+  }  
+}
 
 const store = new Vuex.Store({
+  plugins: [storagePlugin],
   state: {
     version: "",
     states: States,
@@ -40,18 +72,8 @@ const store = new Vuex.Store({
   },  
 
   mutations: {  
-    initializeStore(state) { 
-      if ( localStorage.getItem('store') ) {
-        let store = JSON.parse( 
-          localStorage.getItem('store')
-        );
-
-        if ( store.version == Version ) {          
-            Object.assign(state, store);
-        } else {
-          state.version = Version;
-        }
-      }
+    updateVersion(state, payload) {
+      state.version = payload;
     },
 
     addFavorite (state, payload) {
@@ -161,6 +183,11 @@ const app = new Vue({
   },
 
   methods: {
+    init() { 
+      var self = this;
+      setTimeout(function(){ self.toggleAbout = false }, 3000);
+    },
+	  
     getSize() {
       this.innerWidth = window.innerWidth;
       this.innerHeight = window.innerHeight;
@@ -255,28 +282,12 @@ const app = new Vue({
     // #endregion Guages ================ //
   },
 
-  beforeCreate() {    
-		this.$store.commit('initializeStore');
-    this.$store.subscribe((mutation, state) => {
-
-      let store = {
-        version: state.version,
-        favorites: state.favorites,
-        selectedState: state.selectedState,
-        graphPeriod: state.graphPeriod,
-      };
-
-      localStorage.setItem(
-        'store', JSON.stringify(store)
-      );
-    });
-	},
-
   mounted() {
     this.getSize();
     window.addEventListener("resize", this.getSize); 
 
     this.loadGuages(this.selectedState.abbr);  
+    this.init();
   },
 
   destroyed() {
