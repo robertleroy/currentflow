@@ -8,9 +8,9 @@ const storagePlugin = store => {
 
     let obj = {
       version: state.version,
-      volume: state.volume,
-      currentPanel: state.currentPanel,
-      autoplay: state.autoplay,
+      favorites: state.favorites,
+      selectedState: state.selectedState,
+      graphPeriod: state.graphPeriod,
     };
     
     localStorage.setItem(
