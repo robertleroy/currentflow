@@ -132,7 +132,7 @@ const app = new Vue({
 
     showStates: false,
     showDetail: false,
-    toggleAbout: false,
+    toggleAbout: true,
     toggleFade: false,
     loadingGuages: false,
 
