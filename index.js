@@ -185,7 +185,7 @@ const app = new Vue({
   methods: {
     init() { 
       var self = this;
-      setTimeout(function(){ self.toggleAbout = false }, 3000);
+      setTimeout(function(){ self.toggleAbout = false }, 2000);
     },
 	  
     getSize() {
