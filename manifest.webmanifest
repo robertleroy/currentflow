@@ -38,10 +38,6 @@
 		"sizes": "120x120"
 	},
 	{
-		"src": "https://robertleroy.github.io/currentflow/img/icon-128.png",
-		"sizes": "128x128"
-	},
-	{
 		"src": "https://robertleroy.github.io/currentflow/img/icon-144.png",
 		"sizes": "144x144"
 	},
@@ -52,10 +48,6 @@
 	{
 		"src": "https://robertleroy.github.io/currentflow/img/icon-192.png",
 		"sizes": "192x192"
-	},
-	{
-		"src": "https://robertleroy.github.io/currentflow/img/icon-256.png",
-		"sizes": "256x256"
 	},
 	{
 		"src": "https://robertleroy.github.io/currentflow/img/icon-300.png",
