@@ -1,4 +1,4 @@
-const CACHE = "cf-cache-v0.1.3";
+const CACHE = "cf-cache-v0.1.4";
 const offlinePage = "offline.html";
 
 // Install stage: set up and open a new cache
