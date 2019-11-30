@@ -14,10 +14,6 @@
 	"prefer_related_applications" : false,
 	"icons" : [
 	{
-		"src": "https://robertleroy.github.io/currentflow/img/icon-180.png",
-		"sizes": "180x180"
-	},
-	{
 		"src": "https://robertleroy.github.io/currentflow/img/icon-192.png",
 		"sizes": "192x192"
 	},
