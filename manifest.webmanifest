@@ -1,17 +1,13 @@
 {
-	"dir" : "ltr",
-	"lang" : "en",
 	"name" : "Currentflow",
+	"short_name" : "Currentflow",
 	"scope" : "/currentflow/",
 	"display" : "standalone",
 	"start_url" : "https://robertleroy.github.io/currentflow/",
-	"short_name" : "Currentflow",
-	"theme_color" : "#000000",
 	"description" : "USGS Streamflow",
 	"orientation" : "any",
-	"background_color" : "transparent",
-	"related_applications" : [],
-	"prefer_related_applications" : false,
+	"theme_color" : "#000000",
+	"background_color" : "#000000",
 	"icons" : [
 	{
 		"src": "https://robertleroy.github.io/currentflow/img/icon-192.png",
