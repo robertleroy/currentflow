@@ -1,5 +1,6 @@
-const CACHE = "cf-cache-v0.1.1";
+const CACHE = "cf-cache-v0.1.2";
 const offlinePage = "offline.html";
+// v0.1.2 introduces maskable icons
 
 // Install stage: set up and open a new cache
 self.addEventListener("install", function (event) {
